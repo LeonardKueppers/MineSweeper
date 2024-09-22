@@ -21,6 +21,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    user-select: none; /* Verhindert Text-Markierungen auf Mobilgeräten */
 }
 
 h1 {
@@ -74,17 +75,15 @@ h1 {
 
 #minesweeper {
     display: grid;
-    gap: 2px;
     grid-template-columns: repeat(9, 1fr);
     width: 100%;
     max-width: 400px;
-    aspect-ratio: 1;
+    gap: 2px;
+    aspect-ratio: 1; /* Stellt sicher, dass das Spielfeld quadratisch bleibt */
 }
 
 /* Spielfeldzellen */
 .cell {
-    width: 100%;
-    height: 100%;
     background-color: #007bff;
     color: white;
     font-size: 4vw;
@@ -94,7 +93,9 @@ h1 {
     align-items: center;
     cursor: pointer;
     border-radius: 4px;
-    aspect-ratio: 1;
+    aspect-ratio: 1; /* Hält die Zellen quadratisch */
+    width: 100%;
+    height: 100%;
 }
 
 .cell.revealed {
@@ -183,12 +184,12 @@ button:hover, #info-button:hover {
 /* Responsive Skalierung */
 @media (max-width: 768px) {
     #game-wrapper {
-        transform: scale(0.85); /* Skalierung */
+        transform: scale(0.85);
     }
 }
 
 @media (max-width: 480px) {
     #game-wrapper {
-        transform: scale(0.7); /* Skalierung */
+        transform: scale(0.7);
     }
 }
