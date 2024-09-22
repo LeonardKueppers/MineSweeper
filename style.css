@@ -1,14 +1,3 @@
-/* Skalierbarer Container */
-#game-wrapper {
-    width: 80vw;
-    max-width: 600px;
-    min-width: 320px;
-    height: auto;
-    margin: 0 auto;
-    transform: scale(1);
-    transform-origin: top center;
-}
-
 /* Allgemeine Stile */
 body {
     font-family: Arial, sans-serif;
@@ -25,23 +14,23 @@ body {
 
 h1 {
     font-family: 'Trebuchet MS', sans-serif;
-    font-size: 8vw;
+    font-size: 48px;
     color: #007bff;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin-top: 20px;
 }
 
 /* Container für das Spiel (Info, Spielfeld) */
 #game-container {
-    border: 5px solid #28a745;
+    border: 5px solid #28a745;  /* Harmonische, abhebende Farbe */
     padding: 20px;
     display: inline-block;
     border-radius: 15px;
-    background-color: #ffffff;
+    background-color: #ffffff;  /* Kontrastreicher Hintergrund */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    width: 100%;
+    max-width: 90vw;
 }
 
 /* Info-Container für Score und Timer */
@@ -57,44 +46,37 @@ h1 {
 }
 
 #scoreboard, #timer {
-    font-size: 5vw;
+    font-size: 20px;
 }
 
 /* Spielfeld-Container */
 #minesweeper-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f9fa;
-    padding: 20px;
-    max-width: 100%;
     border: 3px solid #28a745;
     border-radius: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
 }
 
 #minesweeper {
     display: grid;
     gap: 2px;
-    grid-template-columns: repeat(9, 1fr);
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 1;
+    grid-template-columns: repeat(9, 40px);
+    justify-content: center;
 }
 
 /* Spielfeldzellen */
 .cell {
-    width: 100%;
-    height: 100%;
+    width: 40px;
+    height: 40px;
     background-color: #007bff;
     color: white;
-    font-size: 4vw;
+    font-size: 20px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border-radius: 4px;
-    aspect-ratio: 1;
 }
 
 .cell.revealed {
@@ -128,7 +110,7 @@ h1 {
 
 /* Game-Status Anzeige */
 #game-status {
-    font-size: 5vw;
+    font-size: 36px;
     margin: 30px 0;
 }
 
@@ -142,12 +124,12 @@ h1 {
 
 /* Button und Spielregeln */
 button, #info-button {
-    margin-top: 30px;
+    margin-top: 30px; /* Mehr Platz zwischen Spielfeld und Button */
     padding: 10px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    font-size: 4vw;
+    font-size: 18px;
     border: none;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -164,31 +146,20 @@ button:hover, #info-button:hover {
     background-color: #f1f1f1;
     color: #333;
     border-radius: 5px;
-    width: 100%;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: left;
 }
 
 /* Footer */
 #footer {
     margin-top: 20px;
-    font-size: 4vw;
+    font-size: 16px;
     color: #555;
 }
 
 #footer p {
     margin: 0;
     padding: 0;
-}
-
-/* Responsive Skalierung */
-@media (max-width: 768px) {
-    #game-wrapper {
-        transform: scale(0.85); /* Skalierung */
-    }
-}
-
-@media (max-width: 480px) {
-    #game-wrapper {
-        transform: scale(0.7); /* Skalierung */
-    }
 }

@@ -5,10 +5,10 @@ let board = [];
 let mineLocations = [];
 let revealedCells = 0;
 let score = 0;
-let gameOver = false;
+let gameOver = false; // Variable, um das Ende des Spiels zu markieren
 let timerInterval = null;
 let timeElapsed = 0;
-let firstClick = false;
+let firstClick = false; // Variable, um den ersten Klick zu erkennen
 
 const minesweeperDiv = document.getElementById('minesweeper');
 const scoreSpan = document.getElementById('score');
@@ -25,14 +25,15 @@ function initGame() {
     gameOver = false;
     updateScore();
     updateTime();
-    gameStatusDiv.style.display = 'none';
-    minesweeperDiv.style.pointerEvents = 'auto';
+    gameStatusDiv.style.display = 'none'; // Verstecke den Spielstatus
+    minesweeperDiv.style.pointerEvents = 'auto'; // Reaktiviere das Spielfeld
     minesweeperDiv.innerHTML = '';
 
     if (timerInterval) {
-        clearInterval(timerInterval);
+        clearInterval(timerInterval); // Setze den Timer zurück
     }
 
+    // Setup grid
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             const cell = document.createElement('div');
@@ -40,10 +41,7 @@ function initGame() {
             cell.setAttribute('data-row', i);
             cell.setAttribute('data-col', j);
             cell.addEventListener('click', handleCellClick);
-            cell.addEventListener('contextmenu', handleRightClick);
-            // Mobile: Long press für Fahnen
-            cell.addEventListener('touchstart', handleLongPressStart);
-            cell.addEventListener('touchend', handleLongPressEnd);
+            cell.addEventListener('contextmenu', handleRightClick); // Rechtsklick-Event hinzufügen
             minesweeperDiv.appendChild(cell);
         }
     }
@@ -92,12 +90,17 @@ function countMines(row, col) {
 }
 
 function handleCellClick(event) {
-    if (gameOver) return;
+    if (gameOver) return; // Wenn das Spiel vorbei ist, ignoriere Klicks
+
+    if (!firstClick) {
+        startTimer();
+        firstClick = true;
+    }
 
     const row = parseInt(event.target.getAttribute('data-row'));
     const col = parseInt(event.target.getAttribute('data-col'));
 
-    if (event.target.classList.contains('flag')) return;
+    if (event.target.classList.contains('flag')) return; // Keine Aktion, wenn das Feld markiert ist
 
     if (board[row][col] === 'M') {
         revealMines();
@@ -119,31 +122,20 @@ function handleCellClick(event) {
 }
 
 function handleRightClick(event) {
-    event.preventDefault();
-    if (gameOver) return;
+    event.preventDefault(); // Verhindert das Standard-Rechtsklick-Menü
+
+    if (gameOver) return; // Wenn das Spiel vorbei ist, ignoriere Rechtsklicks
 
     const cell = event.target;
-    if (cell.classList.contains('revealed')) return;
+    if (cell.classList.contains('revealed')) return; // Keine Aktion, wenn die Zelle bereits aufgedeckt wurde
 
     if (cell.classList.contains('flag')) {
         cell.classList.remove('flag');
         cell.textContent = '';
     } else {
         cell.classList.add('flag');
-        cell.textContent = '🚩';
+        cell.textContent = '🚩'; // Flagge anzeigen
     }
-}
-
-// Mobile: Long press für Fahnen
-let pressTimer;
-function handleLongPressStart(event) {
-    pressTimer = setTimeout(() => {
-        handleRightClick(event);
-    }, 500);
-}
-
-function handleLongPressEnd() {
-    clearTimeout(pressTimer);
 }
 
 function revealCell(row, col) {
@@ -156,12 +148,12 @@ function revealCell(row, col) {
     const cellValue = board[row][col];
     if (cellValue > 0) {
         cell.textContent = cellValue;
-        cell.setAttribute('data-value', cellValue);
+        cell.setAttribute('data-value', cellValue); // Setze das data-value-Attribut für die Farben
     } else {
         revealAdjacentCells(row, col);
     }
 
-    score++;
+    score++; // Punkte für das Aufdecken einer Zelle erhöhen
 }
 
 function revealAdjacentCells(row, col) {
@@ -182,19 +174,19 @@ function revealMines() {
         mineCell.classList.add('mine');
         mineCell.textContent = '💣';
     });
-    minesweeperDiv.style.pointerEvents = 'none';
+    minesweeperDiv.style.pointerEvents = 'none'; // Deaktiviere das Spielfeld nach Game Over
 }
 
 function showGameOverMessage() {
     gameStatusDiv.textContent = "GAME OVER!";
     gameStatusDiv.className = "game-over";
-    gameStatusDiv.style.display = 'block';
+    gameStatusDiv.style.display = 'block'; // Zeige das "GAME OVER!"-Textfeld an
 }
 
 function showWinnerMessage() {
     gameStatusDiv.textContent = "WINNER!";
     gameStatusDiv.className = "winner";
-    gameStatusDiv.style.display = 'block';
+    gameStatusDiv.style.display = 'block'; // Zeige das "WINNER!"-Textfeld an
 }
 
 function updateScore() {
