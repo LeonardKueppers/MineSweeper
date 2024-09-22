@@ -41,6 +41,9 @@ function initGame() {
             cell.setAttribute('data-col', j);
             cell.addEventListener('click', handleCellClick);
             cell.addEventListener('contextmenu', handleRightClick);
+            // Mobile: Long press für Fahnen
+            cell.addEventListener('touchstart', handleLongPressStart);
+            cell.addEventListener('touchend', handleLongPressEnd);
             minesweeperDiv.appendChild(cell);
         }
     }
@@ -129,6 +132,18 @@ function handleRightClick(event) {
         cell.classList.add('flag');
         cell.textContent = '🚩';
     }
+}
+
+// Mobile: Long press für Fahnen
+let pressTimer;
+function handleLongPressStart(event) {
+    pressTimer = setTimeout(() => {
+        handleRightClick(event);
+    }, 500);
+}
+
+function handleLongPressEnd() {
+    clearTimeout(pressTimer);
 }
 
 function revealCell(row, col) {
