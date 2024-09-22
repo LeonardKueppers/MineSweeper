@@ -179,15 +179,11 @@ function revealAdjacentCells(row, col) {
 function revealMines() {
     mineLocations.forEach(({ row, col }) => {
         const mineCell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
-        if (!mineCell.classList.contains('flag')) {
-            mineCell.classList.add('mine');
-            mineCell.textContent = '💣';
-        }
+        mineCell.classList.add('mine');
+        mineCell.textContent = '💣';
     });
-    minesweeperDiv.style.pointerEvents = 'none'; // Deaktiviert weitere Klicks nach Game Over
+    minesweeperDiv.style.pointerEvents = 'none';
 }
-
-
 
 function showGameOverMessage() {
     gameStatusDiv.textContent = "GAME OVER!";
