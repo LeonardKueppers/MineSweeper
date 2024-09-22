@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="game-wrapper">
+      <h1>Minesweeper</h1>
+
+      <!-- Container für das Spiel -->
+      <div id="game-container">
+        <!-- Info-Container für Score und Timer -->
+        <div id="info-container">
+          <div id="scoreboard">Punkte: <span id="score">0</span></div>
+          <div id="timer">Zeit: <span id="time">0</span> Sekunden</div>
+        </div>
+
+        <!-- Spielfeld -->
+        <div id="minesweeper-container">
+          <div id="minesweeper"></div>
+        </div>
+
+        <!-- Anzeige für "GAME OVER!" oder "WINNER!" -->
+        <div id="game-status" style="display: none"></div>
+
+        <!-- Neuer Spiel Button -->
+        <button onclick="restartGame()">Neues Spiel</button>
+
+        <div id="info-button" onclick="toggleInfo()">Spielregeln anzeigen</div>
+        <div id="info-box" style="display: none">
+          <p><strong>Spielregeln:</strong></p>
+          <p>
+            Das Ziel des Spiels ist es, alle Zellen ohne Minen aufzudecken.
+            Zahlen auf den Zellen zeigen an, wie viele Minen sich in den
+            angrenzenden Feldern befinden. Insgesamt gibt es 10 Minen. Klicke
+            mit der linken Maustaste auf eine Zelle, um sie aufzudecken.
+            Verwende die rechte Maustaste, um vermutete Minen zu markieren.
+            Vermeide es, eine Mine zu treffen!
+          </p>
+        </div>
+
+        <div id="footer">
+          <p>by Leonard Küppers</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

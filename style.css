@@ -1,0 +1,191 @@
+/* Skalierbarer Container */
+#game-wrapper {
+    width: 80vw;
+    max-width: 600px;
+    min-width: 320px;
+    height: auto;
+    margin: 0 auto;
+    transform: scale(1); /* Für Skalierung */
+    transform-origin: top center;
+}
+
+/* Allgemeine Stile */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 8vw; /* Skaliert dynamisch mit dem Bildschirm */
+    color: #007bff;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+/* Container für das Spiel (Info, Spielfeld) */
+#game-container {
+    border: 5px solid #28a745;
+    padding: 20px;
+    display: inline-block;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Info-Container für Score und Timer */
+#info-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#scoreboard, #timer {
+    font-size: 5vw; /* Verhältnismäßig größer für kleine Bildschirme */
+}
+
+/* Spielfeld-Container */
+#minesweeper-container {
+    border: 3px solid #28a745;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#minesweeper {
+    display: grid;
+    gap: 2px;
+    grid-template-columns: repeat(9, 1fr);
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+}
+
+/* Spielfeldzellen */
+.cell {
+    background-color: #007bff;
+    color: white;
+    font-size: 4vw; /* Skalierbare Schriftgröße */
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    aspect-ratio: 1;
+}
+
+.cell.revealed {
+    background-color: #6c757d;
+    cursor: default;
+}
+
+.cell.mine {
+    background-color: red;
+}
+
+/* Farben für bestimmte Zahlenwerte */
+.cell.revealed[data-value="1"] {
+    color: blue;
+}
+
+.cell.revealed[data-value="2"] {
+    color: green;
+}
+
+.cell.revealed[data-value="3"] {
+    color: red;
+}
+
+.cell.flag {
+    background-color: #ffc107;
+    cursor: default;
+    color: black;
+    font-size: 24px;
+}
+
+/* Game-Status Anzeige */
+#game-status {
+    font-size: 5vw; /* Skaliert proportional zur Bildschirmgröße */
+    margin: 30px 0;
+}
+
+#game-status.game-over {
+    color: red;
+}
+
+#game-status.winner {
+    color: green;
+}
+
+/* Button und Spielregeln */
+button, #info-button {
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 4vw; /* Skaliert proportional zur Bildschirmgröße */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+button:hover, #info-button:hover {
+    background-color: #0056b3;
+}
+
+#info-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 5px;
+    width: 100%;
+    text-align: left;
+}
+
+/* Footer */
+#footer {
+    margin-top: 20px;
+    font-size: 4vw; /* Skaliert proportional zur Bildschirmgröße */
+    color: #555;
+}
+
+#footer p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Responsive Skalierung */
+@media (max-width: 768px) {
+    #game-wrapper {
+        transform: scale(0.85); /* Skalierung */
+    }
+}
+
+@media (max-width: 480px) {
+    #game-wrapper {
+        transform: scale(0.7); /* Skalierung */
+    }
+}
