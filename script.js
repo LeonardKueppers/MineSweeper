@@ -41,18 +41,51 @@ function initGame() {
             cell.setAttribute('data-col', j);
             cell.addEventListener('click', handleCellClick);
             cell.addEventListener('contextmenu', handleRightClick);
-
-            // Mobile: Long press für Fahnen + Verhindern von Standardmarkierung
-            cell.addEventListener('touchstart', handleLongPressStart, { passive: false });
-            cell.addEventListener('touchend', handleLongPressEnd);
-            cell.addEventListener('touchmove', (e) => e.preventDefault()); // Verhindert das Markieren
-
             minesweeperDiv.appendChild(cell);
         }
     }
 
     placeMines();
     updateNumbers();
+}
+
+function placeMines() {
+    let minesPlaced = 0;
+    while (minesPlaced < minesCount) {
+        const row = Math.floor(Math.random() * rows);
+        const col = Math.floor(Math.random() * cols);
+
+        if (board[row][col] !== 'M') {
+            board[row][col] = 'M';
+            mineLocations.push({ row, col });
+            minesPlaced++;
+        }
+    }
+}
+
+function updateNumbers() {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (board[i][j] === 'M') continue;
+            board[i][j] = countMines(i, j);
+        }
+    }
+}
+
+function countMines(row, col) {
+    let count = 0;
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            const newRow = row + i;
+            const newCol = col + j;
+            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+                if (board[newRow][newCol] === 'M') {
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
 }
 
 function handleCellClick(event) {
@@ -96,19 +129,6 @@ function handleRightClick(event) {
         cell.classList.add('flag');
         cell.textContent = '🚩';
     }
-}
-
-// Mobile: Long press für Fahnen
-let pressTimer;
-function handleLongPressStart(event) {
-    event.preventDefault(); // Verhindert das Standardverhalten auf Mobilgeräten
-    pressTimer = setTimeout(() => {
-        handleRightClick(event);
-    }, 500);
-}
-
-function handleLongPressEnd() {
-    clearTimeout(pressTimer);
 }
 
 function revealCell(row, col) {

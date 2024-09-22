@@ -1,4 +1,4 @@
-/* Verhindert das Markieren von Text auf Mobilgeräten */
+/* Grundstruktur des Spiels */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -15,14 +15,14 @@ body {
 
 h1 {
     font-family: 'Trebuchet MS', sans-serif;
-    font-size: 8vw;
+    font-size: 48px;
     color: #007bff;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin-top: 20px;
 }
 
-/* Spielfeld-Container */
+/* Container für das Spiel (Info, Spielfeld) */
 #game-container {
     border: 5px solid #28a745;
     padding: 20px;
@@ -31,46 +31,88 @@ h1 {
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    width: 100%;
 }
 
-#minesweeper-container {
+/* Info-Container für Score und Timer */
+#info-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    background-color: #28a745;
+    color: white;
     padding: 10px;
-    background-color: #f8f9fa;
-    max-width: 400px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Spielfeld-Container */
+#minesweeper-container {
     border: 3px solid #28a745;
     border-radius: 10px;
-    aspect-ratio: 1; /* Damit der Container quadratisch bleibt */
+    padding: 10px;
+    background-color: #f8f9fa;
 }
 
 #minesweeper {
     display: grid;
-    grid-template-columns: repeat(9, 1fr); /* Grid mit gleichmäßigen Spalten */
+    grid-template-columns: repeat(9, 40px);
     gap: 2px;
-    width: 100%;
-    height: 100%;
+    justify-content: center;
 }
 
+/* Spielfeldzellen */
 .cell {
-    width: 100%;
+    width: 40px;
+    height: 40px;
     background-color: #007bff;
     color: white;
-    font-size: 2vw;
+    font-size: 20px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     border-radius: 4px;
-    aspect-ratio: 1; /* Stellt sicher, dass jede Zelle quadratisch bleibt */
 }
 
 .cell.revealed {
     background-color: #6c757d;
     cursor: default;
 }
+/* Farben für bestimmte Zahlenwerte */
+.cell.revealed[data-value="1"] {
+    color: blue;
+}
+
+.cell.revealed[data-value="2"] {
+    color: green;
+}
+
+.cell.revealed[data-value="3"] {
+    color: red;
+}
+
+.cell.revealed[data-value="4"] {
+    color: darkblue;
+}
+
+.cell.revealed[data-value="5"] {
+    color: brown;
+}
+
+.cell.revealed[data-value="6"] {
+    color: cyan;
+}
+
+.cell.revealed[data-value="7"] {
+    color: black;
+}
+
+.cell.revealed[data-value="8"] {
+    color: gray;
+}
+
 
 .cell.mine {
     background-color: red;
@@ -79,11 +121,13 @@ h1 {
 .cell.flag {
     background-color: #ffc107;
     cursor: default;
+    color: black;
     font-size: 24px;
 }
 
+/* Anzeige für den Spielstatus */
 #game-status {
-    font-size: 5vw;
+    font-size: 36px;
     margin: 30px 0;
 }
 
@@ -95,12 +139,44 @@ h1 {
     color: green;
 }
 
-/* Verhindert das Markieren von Text auf Mobilgeräten */
-* {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+/* Button und Spielregeln */
+button, #info-button {
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+button:hover, #info-button:hover {
+    background-color: #0056b3;
+}
+
+#info-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 5px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+/* Footer */
+#footer {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+}
+
+#footer p {
+    margin: 0;
+    padding: 0;
 }
