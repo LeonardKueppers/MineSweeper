@@ -10,6 +10,7 @@ let timerInterval = null;
 let timeElapsed = 0;
 let firstClick = false; // Variable, um den ersten Klick zu erkennen
 let longPressTimeout = null; // Variable, um das Timeout für lange Berührungen zu speichern
+let longPressActive = false; // Variable, um zu erkennen, ob ein langer Druck ausgeführt wurde
 
 const minesweeperDiv = document.getElementById('minesweeper');
 const scoreSpan = document.getElementById('score');
@@ -61,11 +62,13 @@ function initGame() {
 function handleTouchStart(event) {
     event.preventDefault();  // Verhindert das Standardverhalten
     const cell = event.target;
+    longPressActive = false; // Zurücksetzen der longPressActive-Variable
 
     // Timeout setzen für langes Drücken (500ms als Beispiel)
     longPressTimeout = setTimeout(() => {
         if (!cell.classList.contains('revealed')) {
             handleRightClick(event); // Fahne setzen bei langem Drücken
+            longPressActive = true;  // Langer Druck wurde aktiviert
         }
     }, 500); // 500ms langes Drücken
 }
@@ -75,14 +78,14 @@ function handleTouchEnd(event) {
     clearTimeout(longPressTimeout); // Timeout für langes Drücken zurücksetzen
     const cell = event.target;
 
-    // Wenn es ein kurzer Klick ist, wird die Zelle normal aufgedeckt
-    if (gameOver) return;
-
-    if (cell.classList.contains('flag')) {
-        cell.classList.remove('flag');
-        cell.textContent = ''; // Entferne die Fahne bei einem kurzen Tap
-    } else {
-        handleCellClick(event); // Normales Zellenklicken bei kurzer Berührung
+    // Wenn es ein kurzer Klick ist und kein langer Druck aktiv war, wird die Zelle normal aufgedeckt oder Fahne entfernt
+    if (!longPressActive && !cell.classList.contains('revealed')) {
+        if (cell.classList.contains('flag')) {
+            cell.classList.remove('flag');
+            cell.textContent = ''; // Entferne die Fahne bei einem kurzen Tap
+        } else {
+            handleCellClick(event); // Normales Zellenklicken bei kurzer Berührung
+        }
     }
 }
 
