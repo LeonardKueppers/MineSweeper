@@ -9,6 +9,7 @@ let gameOver = false; // Variable, um das Ende des Spiels zu markieren
 let timerInterval = null;
 let timeElapsed = 0;
 let firstClick = false; // Variable, um den ersten Klick zu erkennen
+let longPressTimeout = null; // Variable, um das Timeout für lange Berührungen zu speichern
 
 const minesweeperDiv = document.getElementById('minesweeper');
 const scoreSpan = document.getElementById('score');
@@ -41,13 +42,66 @@ function initGame() {
             cell.setAttribute('data-row', i);
             cell.setAttribute('data-col', j);
             cell.addEventListener('click', handleCellClick);
-            cell.addEventListener('contextmenu', handleRightClick); // Rechtsklick-Event hinzufügen
+            cell.addEventListener('contextmenu', handleRightClick); // Rechtsklick-Event für Desktop
+
+            // Neue Touch-Events für langes Drücken hinzufügen (Mobile)
+            cell.addEventListener('touchstart', handleTouchStart);
+            cell.addEventListener('touchend', handleTouchEnd);
+            cell.addEventListener('touchmove', handleTouchMove);
+
             minesweeperDiv.appendChild(cell);
         }
     }
 
     placeMines();
     updateNumbers();
+}
+
+// Funktion für "touchstart" (Berührung beginnt)
+function handleTouchStart(event) {
+    event.preventDefault();  // Verhindert das Standardverhalten
+    const cell = event.target;
+
+    // Timeout setzen für langes Drücken (500ms als Beispiel)
+    longPressTimeout = setTimeout(() => {
+        if (!cell.classList.contains('revealed')) {
+            handleRightClick(event); // Fahne setzen bei langem Drücken
+        }
+    }, 500); // 500ms langes Drücken
+}
+
+// Funktion für "touchend" (Berührung endet)
+function handleTouchEnd(event) {
+    clearTimeout(longPressTimeout); // Timeout für langes Drücken zurücksetzen
+    const cell = event.target;
+
+    // Wenn es ein kurzer Klick ist, wird die Zelle normal aufgedeckt
+    if (!cell.classList.contains('flag') && !gameOver) {
+        handleCellClick(event); // Normales Zellenklicken bei kurzer Berührung
+    }
+}
+
+// Funktion, um das Verschieben während des Touches zu verhindern (während eines Long Touch)
+function handleTouchMove(event) {
+    clearTimeout(longPressTimeout); // Wenn der Finger bewegt wird, keinen langen Klick registrieren
+}
+
+// Funktion für Rechtsklick oder langes Drücken (Fahne setzen)
+function handleRightClick(event) {
+    event.preventDefault(); // Verhindert das Standard-Rechtsklick-Menü
+
+    if (gameOver) return; // Wenn das Spiel vorbei ist, ignoriere Rechtsklicks
+
+    const cell = event.target;
+    if (cell.classList.contains('revealed')) return; // Keine Aktion, wenn die Zelle bereits aufgedeckt wurde
+
+    if (cell.classList.contains('flag')) {
+        cell.classList.remove('flag');
+        cell.textContent = '';
+    } else {
+        cell.classList.add('flag');
+        cell.textContent = '🚩'; // Flagge anzeigen
+    }
 }
 
 function placeMines() {
@@ -118,23 +172,6 @@ function handleCellClick(event) {
         revealMines();
         gameOver = true;
         stopTimer();
-    }
-}
-
-function handleRightClick(event) {
-    event.preventDefault(); // Verhindert das Standard-Rechtsklick-Menü
-
-    if (gameOver) return; // Wenn das Spiel vorbei ist, ignoriere Rechtsklicks
-
-    const cell = event.target;
-    if (cell.classList.contains('revealed')) return; // Keine Aktion, wenn die Zelle bereits aufgedeckt wurde
-
-    if (cell.classList.contains('flag')) {
-        cell.classList.remove('flag');
-        cell.textContent = '';
-    } else {
-        cell.classList.add('flag');
-        cell.textContent = '🚩'; // Flagge anzeigen
     }
 }
 
