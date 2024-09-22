@@ -76,7 +76,12 @@ function handleTouchEnd(event) {
     const cell = event.target;
 
     // Wenn es ein kurzer Klick ist, wird die Zelle normal aufgedeckt
-    if (!cell.classList.contains('flag') && !gameOver) {
+    if (gameOver) return;
+
+    if (cell.classList.contains('flag')) {
+        cell.classList.remove('flag');
+        cell.textContent = ''; // Entferne die Fahne bei einem kurzen Tap
+    } else {
         handleCellClick(event); // Normales Zellenklicken bei kurzer Berührung
     }
 }
