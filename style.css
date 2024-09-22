@@ -107,7 +107,7 @@ h1 {
 }
 
 .cell.revealed[data-value="2"] {
-    color: green;
+    color: #4DFF88;
 }
 
 .cell.revealed[data-value="3"] {
@@ -136,7 +136,7 @@ h1 {
 
 /* Zellen, die als Fahne markiert sind */
 .cell.flag {
-    background-color: #ffc107;  /* Gelbe Hintergrundfarbe */
+    background-color: #BFE600;  /* Gelbe Hintergrundfarbe */
     cursor: default;  /* Keine Aktion möglich */
     color: black;  /* Schwarzer Text für die Fahne */
     font-size: calc(12px + 1vw);  /* Größere Schriftgröße für die Fahne */
