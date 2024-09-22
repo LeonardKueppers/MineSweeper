@@ -188,6 +188,7 @@ function revealMines() {
 }
 
 
+
 function showGameOverMessage() {
     gameStatusDiv.textContent = "GAME OVER!";
     gameStatusDiv.className = "game-over";
