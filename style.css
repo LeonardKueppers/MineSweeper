@@ -1,4 +1,4 @@
-/* Allgemeine Stile für das gesamte Spiel */
+/* Grundstruktur des Spiels */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -15,7 +15,7 @@ body {
 
 h1 {
     font-family: 'Trebuchet MS', sans-serif;
-    font-size: 8vw; /* Dynamische Schriftgröße */
+    font-size: 8vw;
     color: #007bff;
     letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -66,25 +66,25 @@ h1 {
 /* Spielfeld-Grid */
 #minesweeper {
     display: grid;
-    grid-template-columns: repeat(9, 1fr); /* Gleichmäßige 9 Spalten */
+    grid-template-columns: repeat(9, 1fr);
     gap: 2px;
     width: 100%;
-    max-width: 450px; /* Maximalgröße */
-    aspect-ratio: 1; /* Halte das Spielfeld quadratisch */
+    max-width: 450px;
+    aspect-ratio: 1;
 }
 
 /* Spielfeldzellen */
 .cell {
     background-color: #007bff;
     color: white;
-    font-size: 3.5vw; /* Dynamische Schriftgröße */
+    font-size: 3.5vw;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border-radius: 4px;
-    aspect-ratio: 1; /* Halte die Zellen quadratisch */
+    aspect-ratio: 1; /* Hält die Zellen quadratisch */
     width: 100%;
     height: auto;
 }
@@ -94,14 +94,18 @@ h1 {
     cursor: default;
 }
 
+/* Bomben und Flaggen sollen die Zellen nicht vergrößern */
 .cell.mine {
     background-color: red;
+    font-size: 2.5vw; /* Kleinere Schriftgröße für Bomben */
+    line-height: 1; /* Verhindert vertikale Vergrößerung */
 }
 
 .cell.flag {
     background-color: #ffc107;
     cursor: default;
-    font-size: 3vw;
+    font-size: 2.5vw; /* Kleinere Schriftgröße für Flaggen */
+    line-height: 1; /* Verhindert vertikale Vergrößerung */
 }
 
 /* Farben für bestimmte Zahlenwerte */
@@ -151,7 +155,7 @@ h1 {
     color: green;
 }
 
-/* Button und Spielregeln */
+/* Buttons */
 button, #info-button {
     margin-top: 20px;
     padding: 10px;
@@ -194,21 +198,21 @@ button:hover, #info-button:hover {
 /* Anpassungen für kleine Bildschirme */
 @media (max-width: 768px) {
     #minesweeper {
-        max-width: 300px; /* Kleinere Spielfeldgröße auf kleineren Bildschirmen */
+        max-width: 300px;
     }
     
     .cell {
-        font-size: 5vw; /* Größere Schriftgröße auf Mobilgeräten */
+        font-size: 5vw;
     }
 }
 
 @media (max-width: 480px) {
     #minesweeper {
-        max-width: 250px; /* Noch kleinere Größe für sehr kleine Bildschirme */
+        max-width: 250px;
     }
 
     .cell {
-        font-size: 6vw; /* Angepasste Schriftgröße für kleinere Bildschirme */
+        font-size: 6vw;
     }
 
     #info-container {
